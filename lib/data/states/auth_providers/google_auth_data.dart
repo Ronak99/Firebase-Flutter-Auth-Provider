@@ -7,7 +7,7 @@ class GoogleAuthData extends AuthData {
   signIn() async {
     setBusy();
     try {
-      await authService.signInWithFacebook();
+      await authService.signInWithGoogle();
       Utils.removeAllAndPush(AuthStateBuilder());
     } on CustomException catch (e) {
       Utils.errorSnackbar(e.message);
