@@ -1,4 +1,5 @@
 import 'package:auth_provider_demo/screens/authentication/email/email_password_screen.dart';
+import 'package:auth_provider_demo/screens/authentication/facebook/facebook_auth_screen.dart';
 import 'package:auth_provider_demo/screens/authentication/google/google_sign_in_screen.dart';
 import 'package:auth_provider_demo/screens/authentication/phone/phone_number_screen.dart';
 import 'package:flutter/material.dart';
@@ -39,8 +40,17 @@ AuthProviderModel googleAuthProvider = AuthProviderModel(
       "https://cdn.icon-icons.com/icons2/800/PNG/512/_google_icon-icons.com_65791.png",
 );
 
+AuthProviderModel facebookAuthProvider = AuthProviderModel(
+  id: "facebook_auth",
+  name: "Facebook Auth",
+  landing: FacebookAuthScreen(),
+  image:
+      "https://cdn3.iconfinder.com/data/icons/picons-social/57/46-facebook-512.png",
+);
+
 final List<AuthProviderModel> availableProviders = [
   emailProvider,
   phoneAuthProvider,
   googleAuthProvider,
+  facebookAuthProvider,
 ];

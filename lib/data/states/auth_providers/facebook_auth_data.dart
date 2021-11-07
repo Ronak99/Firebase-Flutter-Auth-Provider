@@ -3,7 +3,7 @@ import 'package:auth_provider_demo/screens/auth_state_builder.dart';
 import 'package:auth_provider_demo/utils/custom_exception.dart';
 import 'package:auth_provider_demo/utils/utils.dart';
 
-class GoogleAuthData extends AuthData {
+class FacebookAuthData extends AuthData {
   signIn() async {
     setBusy();
     try {

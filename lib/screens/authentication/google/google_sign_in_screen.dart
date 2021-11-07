@@ -11,11 +11,14 @@ class GoogleSignInScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       body: Center(
-        child: Consumer<GoogleAuthData>(
-          builder: (context, googleAuthData, _) => ActionButton(
-            text: "Google Sign In",
-            isBusy: googleAuthData.isBusy,
-            onPressed: () => googleAuthData.signIn(),
+        child: Container(
+          height: 65,
+          child: Consumer<GoogleAuthData>(
+            builder: (context, googleAuthData, _) => ActionButton(
+              text: "Google Sign In",
+              isBusy: googleAuthData.isBusy,
+              onPressed: () => googleAuthData.signIn(),
+            ),
           ),
         ),
       ),

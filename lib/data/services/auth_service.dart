@@ -2,10 +2,13 @@ import 'package:auth_provider_demo/data/models/app_user.dart';
 import 'package:auth_provider_demo/utils/custom_exception.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter_facebook_auth/flutter_facebook_auth.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 
 class AuthService {
-  static final GoogleSignIn _googleSignIn = GoogleSignIn();
+  final GoogleSignIn _googleSignIn = GoogleSignIn();
+  final FacebookAuth _facebookAuth = FacebookAuth.instance;
+
   FirebaseAuth _auth = FirebaseAuth.instance;
 
   /// Returns the current [User] if they are currently signed-in, or null if not.
@@ -84,7 +87,7 @@ class AuthService {
     }
   }
 
-  static Future<AuthCredential> _getGoogleAuthCredential() async {
+  Future<AuthCredential> _getGoogleAuthCredential() async {
     try {
       GoogleSignInAccount? _signInAccount = await _googleSignIn.signIn();
       if (_signInAccount == null) {
@@ -108,7 +111,46 @@ class AuthService {
   Future<User> signInWithGoogle() async {
     try {
       AuthCredential _googleAuthCredential = await _getGoogleAuthCredential();
-      return await signInWithAuthCredential(authCredential: _googleAuthCredential);
+      return await signInWithAuthCredential(
+          authCredential: _googleAuthCredential);
+    } on CustomException catch (err) {
+      throw CustomException(err.message);
+    }
+  }
+
+  Future<AuthCredential> _getFacebookAuthCredential() async {
+    try {
+      final LoginResult facebookLoginResult =
+          await FacebookAuth.instance.login();
+
+      if (facebookLoginResult.accessToken == null) {
+        throw CustomException("Facebook access token was null");
+      }
+
+      switch (facebookLoginResult.status) {
+        case LoginStatus.success:
+          return FacebookAuthProvider.credential(
+              facebookLoginResult.accessToken!.token) as FacebookAuthCredential;
+        case LoginStatus.cancelled:
+          throw CustomException("Process was cancelled");
+        case LoginStatus.failed:
+          throw CustomException("Sign In Failed");
+        case LoginStatus.operationInProgress:
+          throw CustomException("In Progress");
+      }
+    } on CustomException catch (err) {
+      throw CustomException(err.message);
+    }
+  }
+
+  Future<User> signInWithFacebook() async {
+    try {
+      AuthCredential? _facebookAuthCredential =
+          await _getFacebookAuthCredential();
+
+      return await signInWithAuthCredential(
+        authCredential: _facebookAuthCredential,
+      );
     } on CustomException catch (err) {
       throw CustomException(err.message);
     }
