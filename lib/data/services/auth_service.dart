@@ -3,6 +3,7 @@ import 'package:auth_provider_demo/utils/custom_exception.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
+import 'package:flutter_facebook_auth/flutter_facebook_auth.dart';
 // import 'package:flutter_facebook_auth/flutter_facebook_auth.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 
@@ -119,43 +120,43 @@ class AuthService {
     }
   }
 
-  // Future<AuthCredential> _getFacebookAuthCredential() async {
-  //   try {
-  //     final LoginResult facebookLoginResult =
-  //         await FacebookAuth.instance.login();
+  Future<AuthCredential> _getFacebookAuthCredential() async {
+    try {
+      final LoginResult facebookLoginResult =
+          await FacebookAuth.instance.login();
 
-  //     if (facebookLoginResult.accessToken == null) {
-  //       throw CustomException("Facebook access token was null");
-  //     }
+      if (facebookLoginResult.accessToken == null) {
+        throw CustomException("Facebook access token was null");
+      }
 
-  //     switch (facebookLoginResult.status) {
-  //       case LoginStatus.success:
-  //         return FacebookAuthProvider.credential(
-  //             facebookLoginResult.accessToken!.token) as FacebookAuthCredential;
-  //       case LoginStatus.cancelled:
-  //         throw CustomException("Process was cancelled");
-  //       case LoginStatus.failed:
-  //         throw CustomException("Sign In Failed");
-  //       case LoginStatus.operationInProgress:
-  //         throw CustomException("In Progress");
-  //     }
-  //   } on CustomException catch (err) {
-  //     throw CustomException(err.message);
-  //   }
-  // }
+      switch (facebookLoginResult.status) {
+        case LoginStatus.success:
+          return FacebookAuthProvider.credential(
+              facebookLoginResult.accessToken!.token) as FacebookAuthCredential;
+        case LoginStatus.cancelled:
+          throw CustomException("Process was cancelled");
+        case LoginStatus.failed:
+          throw CustomException("Sign In Failed");
+        case LoginStatus.operationInProgress:
+          throw CustomException("In Progress");
+      }
+    } on CustomException catch (err) {
+      throw CustomException(err.message);
+    }
+  }
 
-  // Future<User> signInWithFacebook() async {
-  //   try {
-  //     AuthCredential? _facebookAuthCredential =
-  //         await _getFacebookAuthCredential();
+  Future<User> signInWithFacebook() async {
+    try {
+      AuthCredential? _facebookAuthCredential =
+          await _getFacebookAuthCredential();
 
-  //     return await signInWithAuthCredential(
-  //       authCredential: _facebookAuthCredential,
-  //     );
-  //   } on CustomException catch (err) {
-  //     throw CustomException(err.message);
-  //   }
-  // }
+      return await signInWithAuthCredential(
+        authCredential: _facebookAuthCredential,
+      );
+    } on CustomException catch (err) {
+      throw CustomException(err.message);
+    }
+  }
 
   /// Sends OTP to the provided phone number
   Future<void> verifyPhoneNumber({

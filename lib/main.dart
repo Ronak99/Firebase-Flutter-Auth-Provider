@@ -1,3 +1,4 @@
+import 'package:auth_provider_demo/data/states/auth_providers/facebook_auth_data.dart';
 import 'package:auth_provider_demo/data/states/auth_providers/google_auth_data.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
@@ -28,6 +29,7 @@ class MyApp extends StatelessWidget {
         ChangeNotifierProvider(create: (_) => EmailPasswordAuthData()),
         ChangeNotifierProvider(create: (_) => PhoneAuthData()),
         ChangeNotifierProvider(create: (_) => GoogleAuthData()),
+        ChangeNotifierProvider(create: (_) => FacebookAuthData()),
       ],
       child: MaterialApp(
         debugShowCheckedModeBanner: false,

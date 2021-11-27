@@ -5,11 +5,9 @@ import 'package:auth_provider_demo/utils/utils.dart';
 
 class FacebookAuthData extends AuthData {
   signIn() async {
-    Utils.errorSnackbar("Implementation Non functional");
-    return;
     setBusy();
     try {
-      // await authService.signInWithFacebook();
+      await authService.signInWithFacebook();
       Utils.removeAllAndPush(AuthStateBuilder());
     } on CustomException catch (e) {
       Utils.errorSnackbar(e.message);
