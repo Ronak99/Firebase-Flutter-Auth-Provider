@@ -9,6 +9,7 @@ import 'data/states/auth_data.dart';
 import 'data/states/auth_providers/email_password_auth_data.dart';
 import 'data/states/auth_providers/github_auth_data.dart';
 import 'data/states/auth_providers/phone_auth_data.dart';
+import 'data/states/auth_providers/twitter_auth_data.dart';
 import 'screens/auth_state_builder.dart';
 
 void main() async {
@@ -32,6 +33,7 @@ class MyApp extends StatelessWidget {
         ChangeNotifierProvider(create: (_) => GoogleAuthData()),
         ChangeNotifierProvider(create: (_) => FacebookAuthData()),
         ChangeNotifierProvider(create: (_) => GithubAuthData()),
+        ChangeNotifierProvider(create: (_) => TwitterAuthData()),
       ],
       child: MaterialApp(
         debugShowCheckedModeBanner: false,

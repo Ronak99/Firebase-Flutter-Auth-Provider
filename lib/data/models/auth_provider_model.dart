@@ -3,6 +3,7 @@ import 'package:auth_provider_demo/screens/authentication/facebook/facebook_auth
 import 'package:auth_provider_demo/screens/authentication/github/github_auth_screen.dart';
 import 'package:auth_provider_demo/screens/authentication/google/google_sign_in_screen.dart';
 import 'package:auth_provider_demo/screens/authentication/phone/phone_number_screen.dart';
+import 'package:auth_provider_demo/screens/authentication/twitter/twitter_auth_screen.dart';
 import 'package:flutter/material.dart';
 
 class AuthProviderModel {
@@ -57,10 +58,19 @@ AuthProviderModel githubAuthProvider = AuthProviderModel(
       "https://github.githubassets.com/images/modules/logos_page/Octocat.png",
 );
 
+AuthProviderModel twitterAuthProvider = AuthProviderModel(
+  id: "github_auth",
+  name: "Twitter Auth",
+  landing: TwitterAuthScreen(),
+  image:
+      "https://static01.nyt.com/images/2014/08/10/magazine/10wmt/10wmt-superJumbo-v4.jpg",
+);
+
 final List<AuthProviderModel> availableProviders = [
   emailProvider,
   phoneAuthProvider,
   googleAuthProvider,
   facebookAuthProvider,
   githubAuthProvider,
+  twitterAuthProvider,
 ];

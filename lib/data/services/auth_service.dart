@@ -11,6 +11,8 @@ import 'package:google_sign_in/google_sign_in.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 
+import 'package:twitter_login/twitter_login.dart';
+
 class AuthService {
   final GoogleSignIn _googleSignIn = GoogleSignIn();
   // final FacebookAuth _facebookAuth = FacebookAuth.instance;
@@ -117,8 +119,7 @@ class AuthService {
   Future<User> signInWithGoogle() async {
     try {
       AuthCredential _googleAuthCredential = await _getGoogleAuthCredential();
-      return await signInWithAuthCredential(
-          authCredential: _googleAuthCredential);
+      return signInWithAuthCredential(authCredential: _googleAuthCredential);
     } on CustomException catch (err) {
       throw CustomException(err.message);
     }
@@ -172,11 +173,61 @@ class AuthService {
       final AuthCredential _githubAuthCredential =
           GithubAuthProvider.credential(loginResponse.accessToken);
 
-      return await signInWithAuthCredential(
+      return signInWithAuthCredential(
         authCredential: _githubAuthCredential,
       );
     } on CustomException catch (err) {
       throw err;
+    }
+  }
+
+  Future<void> signInWithTwitter() async {
+    try {
+      final twitterLogin = TwitterLogin(
+        /// Consumer API keys
+        apiKey: "mzRJxUJp3bWx9aGifcMuaPKbv",
+
+        /// Consumer API Secret keys
+        apiSecretKey: "FLt80E8Smy94U6RjnQ5u66zmEvzV5eBAsFDvqXabTPQ4bxwGWL",
+
+        /// Registered Callback URLs in TwitterApp
+        /// Android is a deeplink
+        /// iOS is a URLScheme
+        redirectURI: 'https://authproviderdemo.firebaseapp.com/__/auth/handler',
+      );
+
+      final authResult = await twitterLogin.login();
+
+      switch (authResult.status) {
+        case TwitterLoginStatus.loggedIn:
+          // success
+          final OAuthCredential _twitterAuthCredential =
+              TwitterAuthProvider.credential(
+            accessToken: authResult.authToken!,
+            secret: authResult.authTokenSecret!,
+          );
+
+          signInWithAuthCredential(
+            authCredential: _twitterAuthCredential,
+          );
+
+          return;
+        case TwitterLoginStatus.cancelledByUser:
+          // cancel
+          print('====== Login cancel ======');
+          break;
+        case TwitterLoginStatus.error:
+        case null:
+          // error
+          print('====== Login error ======');
+          break;
+      }
+
+      if (authResult.user == null) {
+        throw CustomException("User was null");
+      }
+    } on FirebaseAuthException catch (e) {
+      throw CustomException(e.message!);
     }
   }
 
@@ -185,7 +236,7 @@ class AuthService {
       AuthCredential? _facebookAuthCredential =
           await _getFacebookAuthCredential();
 
-      return await signInWithAuthCredential(
+      return signInWithAuthCredential(
         authCredential: _facebookAuthCredential,
       );
     } on CustomException catch (err) {
