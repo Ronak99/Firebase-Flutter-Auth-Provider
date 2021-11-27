@@ -42,23 +42,24 @@ class GithubAuthData extends AuthData {
 
   signIn() async {
     setBusy();
+
     try {
       const String url = "https://github.com/login/oauth/authorize" +
           "?client_id=3aa8667dfbc084dcc585&scope=public_repo%20read:user%20user:email";
 
       if (await canLaunch(url)) {
-        setBusy();
         await launch(
           url,
           forceSafariVC: false,
           forceWebView: false,
         );
       } else {
-        setFree();
         throw CustomException("Cannot launch!");
       }
     } on CustomException catch (e) {
       Utils.errorSnackbar(e.message);
     }
+
+    setFree();
   }
 }

@@ -181,7 +181,7 @@ class AuthService {
     }
   }
 
-  Future<void> signInWithTwitter() async {
+  Future<User> signInWithTwitter() async {
     try {
       final twitterLogin = TwitterLogin(
         /// Consumer API keys
@@ -207,24 +207,14 @@ class AuthService {
             secret: authResult.authTokenSecret!,
           );
 
-          signInWithAuthCredential(
+          return await signInWithAuthCredential(
             authCredential: _twitterAuthCredential,
           );
-
-          return;
         case TwitterLoginStatus.cancelledByUser:
-          // cancel
-          print('====== Login cancel ======');
-          break;
+          throw CustomException("Authentication was cancelled");
         case TwitterLoginStatus.error:
         case null:
-          // error
-          print('====== Login error ======');
-          break;
-      }
-
-      if (authResult.user == null) {
-        throw CustomException("User was null");
+          throw CustomException(authResult.errorMessage ?? "An error occurred");
       }
     } on FirebaseAuthException catch (e) {
       throw CustomException(e.message!);
