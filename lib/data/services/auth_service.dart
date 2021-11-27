@@ -1,4 +1,6 @@
 import 'package:auth_provider_demo/data/models/app_user.dart';
+import 'package:auth_provider_demo/data/models/github_login_request.dart';
+import 'package:auth_provider_demo/data/models/github_login_response.dart';
 import 'package:auth_provider_demo/utils/custom_exception.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -6,6 +8,8 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter_facebook_auth/flutter_facebook_auth.dart';
 // import 'package:flutter_facebook_auth/flutter_facebook_auth.dart';
 import 'package:google_sign_in/google_sign_in.dart';
+import 'package:http/http.dart' as http;
+import 'dart:convert';
 
 class AuthService {
   final GoogleSignIn _googleSignIn = GoogleSignIn();
@@ -142,6 +146,37 @@ class AuthService {
       }
     } on CustomException catch (err) {
       throw CustomException(err.message);
+    }
+  }
+
+  Future<User> loginWithGitHub(String code) async {
+    try {
+      //ACCESS TOKEN REQUEST
+      final response = await http.post(
+        Uri.parse("https://github.com/login/oauth/access_token"),
+        headers: {
+          "Content-Type": "application/json",
+          "Accept": "application/json"
+        },
+        body: jsonEncode(GitHubLoginRequest(
+          clientId: "3aa8667dfbc084dcc585",
+          clientSecret: "481e99a99164e1362d25cbb20d47529aa1c81126",
+          code: code,
+        )),
+      );
+
+      GitHubLoginResponse loginResponse =
+          GitHubLoginResponse.fromJson(json.decode(response.body));
+
+      //FIREBASE SIGNIN
+      final AuthCredential _githubAuthCredential =
+          GithubAuthProvider.credential(loginResponse.accessToken);
+
+      return await signInWithAuthCredential(
+        authCredential: _githubAuthCredential,
+      );
+    } on CustomException catch (err) {
+      throw err;
     }
   }
 

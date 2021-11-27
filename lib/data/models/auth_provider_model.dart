@@ -1,5 +1,6 @@
 import 'package:auth_provider_demo/screens/authentication/email/email_password_screen.dart';
 import 'package:auth_provider_demo/screens/authentication/facebook/facebook_auth_screen.dart';
+import 'package:auth_provider_demo/screens/authentication/github/github_auth_screen.dart';
 import 'package:auth_provider_demo/screens/authentication/google/google_sign_in_screen.dart';
 import 'package:auth_provider_demo/screens/authentication/phone/phone_number_screen.dart';
 import 'package:flutter/material.dart';
@@ -48,9 +49,18 @@ AuthProviderModel facebookAuthProvider = AuthProviderModel(
       "https://cdn3.iconfinder.com/data/icons/picons-social/57/46-facebook-512.png",
 );
 
+AuthProviderModel githubAuthProvider = AuthProviderModel(
+  id: "github_auth",
+  name: "Github Auth",
+  landing: GithubAuthScreen(),
+  image:
+      "https://github.githubassets.com/images/modules/logos_page/Octocat.png",
+);
+
 final List<AuthProviderModel> availableProviders = [
   emailProvider,
   phoneAuthProvider,
   googleAuthProvider,
   facebookAuthProvider,
+  githubAuthProvider,
 ];
