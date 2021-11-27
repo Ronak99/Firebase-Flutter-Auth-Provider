@@ -150,6 +150,19 @@ class AuthService {
     }
   }
 
+  Future<User> signInWithFacebook() async {
+    try {
+      AuthCredential? _facebookAuthCredential =
+          await _getFacebookAuthCredential();
+
+      return signInWithAuthCredential(
+        authCredential: _facebookAuthCredential,
+      );
+    } on CustomException catch (err) {
+      throw CustomException(err.message);
+    }
+  }
+
   Future<User> signInWithGitHub(String code) async {
     try {
       //ACCESS TOKEN REQUEST
@@ -218,19 +231,6 @@ class AuthService {
       }
     } on FirebaseAuthException catch (e) {
       throw CustomException(e.message!);
-    }
-  }
-
-  Future<User> signInWithFacebook() async {
-    try {
-      AuthCredential? _facebookAuthCredential =
-          await _getFacebookAuthCredential();
-
-      return signInWithAuthCredential(
-        authCredential: _facebookAuthCredential,
-      );
-    } on CustomException catch (err) {
-      throw CustomException(err.message);
     }
   }
 
