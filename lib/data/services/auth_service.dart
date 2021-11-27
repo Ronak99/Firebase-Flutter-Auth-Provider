@@ -150,7 +150,7 @@ class AuthService {
     }
   }
 
-  Future<User> loginWithGitHub(String code) async {
+  Future<User> signInWithGitHub(String code) async {
     try {
       //ACCESS TOKEN REQUEST
       final response = await http.post(

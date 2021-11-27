@@ -27,7 +27,7 @@ class GithubAuthData extends AuthData {
     String code = link.substring(link.indexOf(RegExp('code=')) + 5);
 
     try {
-      await authService.loginWithGitHub(code);
+      await authService.signInWithGitHub(code);
       Utils.removeAllAndPush(AuthStateBuilder());
       setFree();
     } on CustomException catch (e) {
