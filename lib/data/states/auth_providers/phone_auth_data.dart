@@ -53,6 +53,7 @@ class PhoneAuthData extends AuthData {
         authCredential: phoneAuthCredential,
       );
 
+      // Remove all the previous routes and push the AuthStateBuilder
       Utils.removeAllAndPush(AuthStateBuilder());
 
       setFree();

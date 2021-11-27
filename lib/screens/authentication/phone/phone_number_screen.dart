@@ -28,49 +28,49 @@ class _PhoneNumberScreenState extends State<PhoneNumberScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Container(
-        width: double.infinity,
-        margin: EdgeInsets.only(top: 50),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Text(
-              "Phone Auth",
-              style: Theme.of(context).textTheme.headline3,
-            ),
-            SizedBox(height: 10),
-            Form(
-              key: _formKey,
-              child: Column(
-                children: [
-                  TextFormField(
-                    validator: Validators.validatePhoneNumber,
-                    onSaved: (value) {
-                      setState(() {
-                        _phoneNumber = value!;
-                      });
-                    },
-                    decoration: InputDecoration(
-                      labelText: "Enter Phone Number",
-                      hintText: "+917894561232",
-                    ),
-                  ),
-                  SizedBox(height: 10),
-                  Consumer<PhoneAuthData>(
-                    builder: (context, phoneAuthData, _) {
-                      return ActionButton(
-                        text: "Send OTP",
-                        isBusy: phoneAuthData.isBusy,
-                        onPressed: _onSendOTPButtonTap,
-                      );
-                    },
-                  ),
-                ],
+        body: Container(
+          width: double.infinity,
+          margin: EdgeInsets.only(top: 50),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Text(
+                "Phone Auth",
+                style: Theme.of(context).textTheme.headline3,
               ),
-            ),
-          ],
+              SizedBox(height: 10),
+              Form(
+                key: _formKey,
+                child: Column(
+                  children: [
+                    TextFormField(
+                      validator: Validators.validatePhoneNumber,
+                      onSaved: (value) {
+                        setState(() {
+                          _phoneNumber = value!;
+                        });
+                      },
+                      decoration: InputDecoration(
+                        labelText: "Enter Phone Number",
+                        hintText: "+917894561232",
+                      ),
+                    ),
+                    SizedBox(height: 10),
+                    Consumer<PhoneAuthData>(
+                      builder: (context, phoneAuthData, _) {
+                        return ActionButton(
+                          text: "Send OTP",
+                          isBusy: phoneAuthData.isBusy,
+                          onPressed: _onSendOTPButtonTap,
+                        );
+                      },
+                    ),
+                  ],
+                ),
+              ),
+            ],
+          ),
         ),
-      ),
     );
   }
 }
