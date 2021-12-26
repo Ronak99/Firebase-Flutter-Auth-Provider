@@ -2,14 +2,16 @@ import 'dart:convert';
 
 class AppUser {
   String uid;
-  String name;
-  String email;
+  String? name;
+  String? email;
   String? profilePic;
+  String? phoneNumber;
   AppUser({
     required this.uid,
-    required this.name,
-    required this.email,
+    this.name,
+    this.email,
     this.profilePic,
+    this.phoneNumber,
   });
 
   AppUser copyWith({

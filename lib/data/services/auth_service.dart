@@ -4,7 +4,9 @@ import 'package:auth_provider_demo/data/models/github_login_response.dart';
 import 'package:auth_provider_demo/utils/custom_exception.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_auth_oauth/firebase_auth_oauth.dart';
 import 'package:firebase_core/firebase_core.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_facebook_auth/flutter_facebook_auth.dart';
 // import 'package:flutter_facebook_auth/flutter_facebook_auth.dart';
 import 'package:google_sign_in/google_sign_in.dart';
@@ -165,37 +167,90 @@ class AuthService {
 
   Future<User> signInWithGitHub(String code) async {
     try {
+      User? user = await FirebaseAuthOAuth()
+          .openSignInFlow("github.com", ["user:email"], {"lang": "en"});
+
+
+
+      if (user == null) throw CustomException("user was null");
+
+
+
+      return user;
       //ACCESS TOKEN REQUEST
-      final response = await http.post(
-        Uri.parse("https://github.com/login/oauth/access_token"),
-        headers: {
-          "Content-Type": "application/json",
-          "Accept": "application/json"
-        },
-        body: jsonEncode(GitHubLoginRequest(
-          clientId: "3aa8667dfbc084dcc585",
-          clientSecret: "481e99a99164e1362d25cbb20d47529aa1c81126",
-          code: code,
-        )),
-      );
+      // final response = await http.post(
+      //   Uri.parse("https://github.com/login/oauth/access_token"),
+      //   headers: {
+      //     "Content-Type": "application/json",
+      //     "Accept": "application/json"
+      //   },
+      //   body: jsonEncode(GitHubLoginRequest(
+      //     clientId: "3aa8667dfbc084dcc585",
+      //     clientSecret: "481e99a99164e1362d25cbb20d47529aa1c81126",
+      //     code: code,
+      //   )),
+      // );
 
-      GitHubLoginResponse loginResponse =
-          GitHubLoginResponse.fromJson(json.decode(response.body));
+      // GitHubLoginResponse loginResponse =
+      //     GitHubLoginResponse.fromJson(json.decode(response.body));
 
-      //FIREBASE SIGNIN
-      final AuthCredential _githubAuthCredential =
-          GithubAuthProvider.credential(loginResponse.accessToken);
+      // //FIREBASE SIGNIN
+      // final AuthCredential _githubAuthCredential =
+      //     GithubAuthProvider.credential(loginResponse.accessToken);
 
-      return signInWithAuthCredential(
-        authCredential: _githubAuthCredential,
-      );
-    } on CustomException catch (err) {
-      throw err;
+      // return signInWithAuthCredential(
+      //   authCredential: _githubAuthCredential,
+      // );
+    } on PlatformException catch (error) {
+      throw CustomException("${error.code}: ${error.message}");
     }
   }
 
   Future<User> signInWithTwitter() async {
     try {
+      final twitterLogin = TwitterLogin(
+        /// Consumer API keys
+        apiKey: "mzRJxUJp3bWx9aGifcMuaPKbv",
+
+        /// Consumer API Secret keys
+        apiSecretKey: "FLt80E8Smy94U6RjnQ5u66zmEvzV5eBAsFDvqXabTPQ4bxwGWL",
+
+        /// Registered Callback URLs in TwitterApp
+        /// Android is a deeplink
+        /// iOS is a URLScheme
+        redirectURI: 'https://authproviderdemo.firebaseapp.com/__/auth/handler',
+      );
+
+      final authResult = await twitterLogin.login();
+
+      switch (authResult.status) {
+        case TwitterLoginStatus.loggedIn:
+          // success
+          final OAuthCredential _twitterAuthCredential =
+              TwitterAuthProvider.credential(
+            accessToken: authResult.authToken!,
+            secret: authResult.authTokenSecret!,
+          );
+
+          return await signInWithAuthCredential(
+            authCredential: _twitterAuthCredential,
+          );
+        case TwitterLoginStatus.cancelledByUser:
+          throw CustomException("Authentication was cancelled");
+        case TwitterLoginStatus.error:
+        case null:
+          throw CustomException(authResult.errorMessage ?? "An error occurred");
+      }
+    } on FirebaseAuthException catch (e) {
+      throw CustomException(e.message!);
+    }
+  }
+
+  Future<User> signInWithMicrosoft() async {
+    try {
+      await FirebaseAuthOAuth()
+          .openSignInFlow("microsoft.com", ["email openid"]);
+
       final twitterLogin = TwitterLogin(
         /// Consumer API keys
         apiKey: "mzRJxUJp3bWx9aGifcMuaPKbv",

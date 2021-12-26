@@ -9,8 +9,6 @@ import 'package:auth_provider_demo/utils/utils.dart';
 import '../auth_data.dart';
 
 class EmailPasswordAuthData extends AuthData {
-  final AuthService _authService = AuthService();
-
   signInUsingEmailAndPassword({
     required String email,
     required String password,
@@ -19,7 +17,7 @@ class EmailPasswordAuthData extends AuthData {
       // Set is busy to true to prevent loading
       setBusy();
 
-      await _authService.signIn(email: email, password: password);
+      await authService.signIn(email: email, password: password);
 
       // Remove all the previous routes and push the AuthStateBuilder
       Utils.removeAllAndPush(AuthStateBuilder());
@@ -48,7 +46,7 @@ class EmailPasswordAuthData extends AuthData {
       setBusy();
 
       // Sign up the user
-      User _user = await _authService.signUp(email: email, password: password);
+      User _user = await authService.signUp(email: email, password: password);
 
       // Create an AppUser object
       AppUser _appUser = AppUser(
@@ -58,7 +56,7 @@ class EmailPasswordAuthData extends AuthData {
       );
 
       // Register on firestore
-      await _authService.registerUserDetails(appUser: _appUser);
+      await authService.registerUserDetails(appUser: _appUser);
 
       // Remove all the previous routes and push the AuthStateBuilder
       Utils.removeAllAndPush(AuthStateBuilder());

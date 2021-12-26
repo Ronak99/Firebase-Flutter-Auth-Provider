@@ -1,3 +1,5 @@
+import 'package:auth_provider_demo/data/services/auth_service.dart';
+import 'package:auth_provider_demo/screens/service.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -159,6 +161,7 @@ class _SignUpViewState extends State<SignUpView> {
 
   late String _email;
   late String _password;
+  late String _name;
 
   _onActionButtonTap() {
     if (!_formKey.currentState!.validate()) return;
@@ -168,7 +171,7 @@ class _SignUpViewState extends State<SignUpView> {
         Provider.of<EmailPasswordAuthData>(context, listen: false);
 
     _emailPasswordAuthData.signUpUsingEmailAndPassword(
-      name: "NAME",
+      name: _name,
       email: _email,
       password: _password,
     );
@@ -190,6 +193,19 @@ class _SignUpViewState extends State<SignUpView> {
             decoration: InputDecoration(
               labelText: "Email",
               hintText: "email@provider.com",
+            ),
+          ),
+          SizedBox(height: 10),
+          TextFormField(
+            validator: Validators.validateSimpleString,
+            onSaved: (value) {
+              setState(() {
+                _name = value!;
+              });
+            },
+            decoration: InputDecoration(
+              labelText: "Name",
+              hintText: "Your name",
             ),
           ),
           SizedBox(height: 10),

@@ -1,6 +1,7 @@
 import 'package:auth_provider_demo/data/models/auth_provider_model.dart';
 import 'package:auth_provider_demo/utils/utils.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 class ProviderSelectionScreen extends StatelessWidget {
   const ProviderSelectionScreen({Key? key}) : super(key: key);
@@ -9,7 +10,7 @@ class ProviderSelectionScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     Widget _providerItem(AuthProviderModel providerModel) {
       return GestureDetector(
-        onTap: () => Utils.navigateTo(providerModel.landing),
+        onTap: () => Utils.navigateTo(providerModel.landingScreen),
         child: Container(
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(10),

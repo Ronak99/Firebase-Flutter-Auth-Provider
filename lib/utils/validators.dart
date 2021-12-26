@@ -1,18 +1,18 @@
 class Validators {
-  static String? validateEmail(String? name) {
-    if (name!.trim().isEmpty) {
+  static String? validateEmail(String? email) {
+    if (email!.trim().isEmpty) {
       return "Field cannot be empty";
     }
 
     if (!RegExp(
             r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]+")
-        .hasMatch(name)) {
+        .hasMatch(email)) {
       return "Invalid Email";
     }
 
     return null;
   }
-
+  
   static String? validatePassword(String? password) {
     if (password!.trim().isEmpty) {
       return "Please provide a password";
@@ -25,24 +25,24 @@ class Validators {
     return null;
   }
 
-  static String? validatePhoneNumber(String? password) {
-    if (password!.trim().isEmpty) {
+  static String? validatePhoneNumber(String? phoneNumber) {
+    if (phoneNumber!.trim().isEmpty) {
       return "Please provide a phone number";
     }
 
-    if (password.length < 13) {
+    if (phoneNumber.length < 13) {
       return "Invalid Phone number";
     }
 
     return null;
   }
 
-  static String? validateOtp(String? password) {
-    if (password!.trim().isEmpty) {
+  static String? validateOtp(String? otp) {
+    if (otp!.trim().isEmpty) {
       return "Please provide an OTP";
     }
 
-    if (password.length == 6) {
+    if (otp.length == 6) {
       return null;
     }
     return "OTP must be of 6 characters";
