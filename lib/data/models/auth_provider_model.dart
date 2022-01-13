@@ -1,3 +1,4 @@
+import 'package:auth_provider_demo/screens/authentication/email/email_password_screen.dart';
 import 'package:flutter/material.dart';
 
 class AuthProviderModel {
@@ -14,7 +15,7 @@ class AuthProviderModel {
 
 AuthProviderModel emailProvider = AuthProviderModel(
   name: "Email/Password",
-  landingScreen: Container(),
+  landingScreen: EmailPasswordScreen(),
   image:
       "https://static.vecteezy.com/system/resources/thumbnails/002/293/604/small/mail-icon-with-long-shadow-black-on-white-background-simple-design-style-illustration-free-vector.jpg",
 );

@@ -1,3 +1,1 @@
-class Validators{
-  
-}
+class Validators {}

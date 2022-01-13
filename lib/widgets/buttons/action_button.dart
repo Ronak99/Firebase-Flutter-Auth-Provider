@@ -9,8 +9,8 @@ class ActionButton extends StatelessWidget {
     Key? key,
     required this.text,
     required this.onPressed,
-    required this.isBusy,
-    required this.isEnabled,
+    this.isBusy = false,
+    this.isEnabled = true,
   }) : super(key: key);
 
   @override
