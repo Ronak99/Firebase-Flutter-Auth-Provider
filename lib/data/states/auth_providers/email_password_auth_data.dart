@@ -6,6 +6,14 @@ import 'package:auth_provider_demo/utils/utils.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
 class EmailPasswordAuthData extends AuthData {
+  bool _hasSelectedSignUpView = true;
+  bool get getHasSelectedSignUpView => _hasSelectedSignUpView;
+
+  toggleAuthView() {
+    _hasSelectedSignUpView = !_hasSelectedSignUpView;
+    notifyListeners();
+  }
+
   signUpUsingEmailAndPassword({
     required String name,
     required String email,
@@ -24,6 +32,30 @@ class EmailPasswordAuthData extends AuthData {
     } on CustomException catch (e) {
       Utils.errorSnackbar(e.message);
       setFree();
+    }
+  }
+
+  signInUsingEmailAndPassword({
+    required String email,
+    required String password,
+  }) async {
+    try {
+      setBusy();
+
+      await authService.signIn(email: email, password: password);
+
+      Utils.removeAllAndPush(AuthStateBuilder());
+
+      setFree();
+    } on CustomException catch (e) {
+      setFree();
+
+      if (e.code == 'user-not-found') {
+        Utils.errorSnackbar("No user found, try signing up instead!");
+        return;
+      }
+
+      Utils.errorSnackbar(e.message);
     }
   }
 }
