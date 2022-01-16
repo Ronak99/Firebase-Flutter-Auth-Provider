@@ -1,4 +1,5 @@
 import 'package:auth_provider_demo/data/states/auth_providers/email_password_auth_data.dart';
+import 'package:auth_provider_demo/utils/validators.dart';
 import 'package:auth_provider_demo/widgets/buttons/action_button.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -49,6 +50,9 @@ class _SignUpViewState extends State<SignUpView> {
   late String _name;
 
   _onActionButtonTap() {
+    // Don't do anything if any of the fields are invalid
+    if (!_formKey.currentState!.validate()) return;
+
     _formKey.currentState!.save();
 
     EmailPasswordAuthData _emailPasswordAuthData =
@@ -65,9 +69,11 @@ class _SignUpViewState extends State<SignUpView> {
   Widget build(BuildContext context) {
     return Form(
       key: _formKey,
+      autovalidateMode: AutovalidateMode.always,
       child: Column(
         children: [
           TextFormField(
+            validator: Validators.validateEmail,
             onSaved: (value) {
               setState(() {
                 _email = value!;
@@ -80,6 +86,7 @@ class _SignUpViewState extends State<SignUpView> {
           ),
           SizedBox(height: 10),
           TextFormField(
+            validator: Validators.validateSimpleString,
             onSaved: (value) {
               setState(() {
                 _name = value!;
@@ -92,6 +99,7 @@ class _SignUpViewState extends State<SignUpView> {
           ),
           SizedBox(height: 10),
           TextFormField(
+            validator: Validators.validatePassword,
             onSaved: (value) {
               setState(() {
                 _password = value!;
@@ -158,6 +166,7 @@ class _SignInViewState extends State<SignInView> {
       child: Column(
         children: [
           TextFormField(
+            validator: Validators.validateEmail,
             onSaved: (value) {
               setState(() {
                 _email = value!;
@@ -170,6 +179,7 @@ class _SignInViewState extends State<SignInView> {
           ),
           SizedBox(height: 10),
           TextFormField(
+            validator: Validators.validatePassword,
             onSaved: (value) {
               setState(() {
                 _password = value!;
