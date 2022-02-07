@@ -13,7 +13,7 @@ class Validators {
   }
 
   static String? validatePassword(String? value) {
-    if (value!.trim().isNotEmpty) {
+    if (value!.trim().isEmpty) {
       return "Please provide a password";
     }
     if (value.length < 6) {
@@ -22,8 +22,8 @@ class Validators {
     return null;
   }
 
-  static String? validateSimpleString(String? value) {
-    if (value!.trim().isEmpty) {
+  static String? validateSimpleString(String? value){
+    if(value!.trim().isEmpty){
       return "Field cannot be empty";
     }
     return null;

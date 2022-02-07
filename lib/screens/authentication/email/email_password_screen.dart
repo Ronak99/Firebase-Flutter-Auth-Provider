@@ -69,7 +69,7 @@ class _SignUpViewState extends State<SignUpView> {
   Widget build(BuildContext context) {
     return Form(
       key: _formKey,
-      autovalidateMode: AutovalidateMode.always,
+      autovalidateMode: AutovalidateMode.onUserInteraction,
       child: Column(
         children: [
           TextFormField(
@@ -86,7 +86,7 @@ class _SignUpViewState extends State<SignUpView> {
           ),
           SizedBox(height: 10),
           TextFormField(
-            validator: Validators.validateSimpleString,
+            // validator: Validators.validateSimpleString,
             onSaved: (value) {
               setState(() {
                 _name = value!;
@@ -99,7 +99,7 @@ class _SignUpViewState extends State<SignUpView> {
           ),
           SizedBox(height: 10),
           TextFormField(
-            validator: Validators.validatePassword,
+            // validator: Validators.validatePassword,
             onSaved: (value) {
               setState(() {
                 _password = value!;
@@ -179,7 +179,7 @@ class _SignInViewState extends State<SignInView> {
           ),
           SizedBox(height: 10),
           TextFormField(
-            validator: Validators.validatePassword,
+            // validator: Validators.validatePassword,
             onSaved: (value) {
               setState(() {
                 _password = value!;
@@ -195,7 +195,7 @@ class _SignInViewState extends State<SignInView> {
           Consumer<EmailPasswordAuthData>(
             builder: (context, emailPasswordAuthData, _) {
               return ActionButton(
-                text: "Sign Up",
+                text: "Sign In",
                 isBusy: emailPasswordAuthData.isBusy,
                 onPressed: _onActionButtonTap,
               );
