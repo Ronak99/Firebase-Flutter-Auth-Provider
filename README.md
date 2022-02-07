@@ -1,16 +1,13 @@
-# auth_provider_demo
+# Firebase Flutter Auth Provider
 
-A new Flutter project.
+This repository maintains implementation of various auth providers supported by firebase and are implemented in flutter
 
-## Getting Started
+## 1.CreatingBase
 
-This project is a starting point for a Flutter application.
+This branch specifically contains the starting point where I have laid down some foundation and implemented basic state management and creating classes which will be utilized by implementation of different type of authentication providers.
 
-A few resources to get you started if this is your first Flutter project:
+### Video Tutorial
+![Video Thumbnail](https://i9.ytimg.com/vi/Bafmg-Pnf28/mqdefault.jpg?v=62001a01&sqp=CNCZg5AG&rs=AOn4CLAsxgyxshJ00vIIBSFsFfpt0eLziA)
 
-- [Lab: Write your first Flutter app](https://flutter.dev/docs/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://flutter.dev/docs/cookbook)
+[Check it out on YouTube](https://youtu.be/Bafmg-Pnf28)
 
-For help getting started with Flutter, view our
-[online documentation](https://flutter.dev/docs), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
