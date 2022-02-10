@@ -7,7 +7,7 @@ This repository maintains implementation of various auth providers supported by 
 This branch contains the code for Email Password Sign up via Firebase.
 
 ### Video Tutorial
-![Video Thumbnail](https://i9.ytimg.com/vi/Bafmg-Pnf28/mqdefault.jpg?v=62001a01&sqp=CNCZg5AG&rs=AOn4CLAsxgyxshJ00vIIBSFsFfpt0eLziA)
+![Video Thumbnail](https://i9.ytimg.com/vi/RwYyHV_97zc/mqdefault.jpg?v=6203c869&sqp=CLDBlZAG&rs=AOn4CLCiYBwLsuHpcLunh_gfUWGhBA0xfQ)
 
-[Check it out on YouTube](https://youtu.be/Bafmg-Pnf28)
+[Check it out on YouTube](https://youtu.be/RwYyHV_97zc)
 
