@@ -1,16 +1,13 @@
-# auth_provider_demo
+# Firebase Flutter Auth Provider
 
-A new Flutter project.
+This repository maintains implementation of various auth providers supported by firebase and are implemented in flutter
 
-## Getting Started
+## 3.EmailPasswordSignIn
 
-This project is a starting point for a Flutter application.
+This branch contains the code for Email Password Sign in via Firebase.
 
-A few resources to get you started if this is your first Flutter project:
+### Video Tutorial
+![Video Thumbnail](https://i9.ytimg.com/vi/jDWNNcncY2o/mqdefault.jpg?v=620bd9e2&sqp=CJS_r5AG&rs=AOn4CLAhyujZY0k3SyO1g94WviRs7UG1Sw)
 
-- [Lab: Write your first Flutter app](https://flutter.dev/docs/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://flutter.dev/docs/cookbook)
+[Check it out on YouTube](https://www.youtube.com/watch?v=jDWNNcncY2o)
 
-For help getting started with Flutter, view our
-[online documentation](https://flutter.dev/docs), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
