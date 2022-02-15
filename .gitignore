@@ -29,7 +29,7 @@
 .packages
 .pub-cache/
 .pub/
-.lock
+*.lock
 /build/
 
 # Web related
